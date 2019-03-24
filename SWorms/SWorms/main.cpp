@@ -12,7 +12,7 @@
 // Last change: 15.03.2019 : some CS
 //------------------------------------------------------------------------------
 
-//#include "Game.h"
+#include "Game.h"
 #include <string>
 #include <iostream>
 
@@ -32,11 +32,13 @@ int main(int argc, char* argv[])
 		std::cout << Sep::ERROR_WRONG_ARGUMENTS << '\n';
 		return Sep::RETURN_ERROR_ARGUMENT;
 	}
-
+	
 	Sep::Game game;
-	if (game.loadConfig(std::string(argv[1])))
-		return Sep::RETURN_ERROR_BAD_CONFIG;
+	game.loadConfig(std::string(argv[1]));
 
+//	if (game.loadConfig(std::string(argv[1])))
+	//	return Sep::RETURN_ERROR_BAD_CONFIG;
+	/*
 	game.printMap();
 	if (game.addWorm(2, 23))
 		return Sep::RETURN_ERROR_INVALID_TARGET;
@@ -61,6 +63,6 @@ int main(int argc, char* argv[])
 		return Sep::RETURN_ERROR_INVALID_TARGET;
 
 	game.move(8, 1, 3);
-
+	*/
 	return Sep::RETURN_OK;
 }
