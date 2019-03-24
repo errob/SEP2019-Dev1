@@ -46,8 +46,12 @@ int Game::loadConfig(std::string cfg_file)
 	{
 		return false;
 	}
-	std::cout << "okay\n";
-
+	
+//todo 
+	// prüfen der config datei
+	// auslesen der größe
+	//rückgabe werte 0 / -1 fehler
+	//error invalid config file
 	setWidth(40);
 	setHeight(11);
 
@@ -78,15 +82,14 @@ int Game::loadConfig(std::string cfg_file)
 		}
 		Game::map_.push_back(vector_column);
 	}
-	std::cout << "\nrealmap:\n";
+
+	//testzwecke
 	Game::printMap();
-	std::cout << "\n add at 10 10:\n";
 	Game::addWorm(3, 3);
-	std::cout << "\n dingi at 10 10:\n";
 	Game::printMap();
 	return true;
 }
-
+ //zum vergleichen testzwecke
 void Game::printHelperMap() 
 {
 
@@ -100,10 +103,9 @@ void Game::printHelperMap()
 	}
 }
 
-
+//todo umrandung des spielfeldes 0 bis 9 \n
 void Game::printMap()
 {
-	
 	for (auto row = 0; row < getHeight(); row++)
 	{
 		for (auto column = 0; column < getWidth(); column++)
@@ -116,14 +118,17 @@ void Game::printMap()
 
 int Game::addWorm(int row, int col) 
 {
-	std::cout << "\n hier:" + Field::getCharacter(map_.at(row).at(col));
-	char test = Field::getCharacter(map_.at(row).at(col));
-	std::cout << "\n hier:"+ test;
-
-	std::cout << Field::getCharacter(map_.at(row).at(col));
+	
 	map_.at(row).at(col) = Field::FieldType::WORM;
+	//todo
+	//schwerkraft
+	//check for air/water colissions
+	//return 0 / -2 invalid target
+
 
 	return 0;
 }
 
+
+//todo move 
 
