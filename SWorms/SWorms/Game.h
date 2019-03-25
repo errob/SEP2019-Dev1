@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include "Field.h"
+#include <regex>
+
 
 namespace Sep {
 
@@ -30,6 +32,7 @@ namespace Sep {
 		//
 		std::vector<std::string> helpMap_;
 		std::vector<std::vector<Field::FieldType>> map_;
+
 		//------------------------------------------------------------------------
 		// variable to file
 		//
@@ -55,6 +58,19 @@ namespace Sep {
 		//
 		~Game();
 
+		const static std::regex REGEX_SPACE;
+		const static std::regex REGEX_LEADING_WHITESPACE;
+		const static std::string Game::FIRST_WORD_SIZE;
+		const static std::string Game::FIRST_WORD_MAP;
+		const static std::string Game::ALLOWED_FIELDS;
+		const static std::string Game::MAGIC_VALUE;
+		const static std::string Game::COMMENT_IDENTIFIER;
+
+
+		const static int Game::HEIGHT_MIN;
+		const static int Game::HEIGHT_MAX;
+		const static int Game::WIDTH_MIN;
+		const static int Game::WIDTH_MAX;
 		//--------------------------------------------------------------------------
 		// Getter
 		//
@@ -98,13 +114,20 @@ namespace Sep {
 		// @param x contains x coordinates
 		// @param y contains y coordinates
 		//
-		//void move(int row, int col, int steps);
+		void move(int row, int col, int steps);
 
 		/////////////////////////////////////////////////////////////////////////////
 		// extra methodes 
 		////////////////////////////////////////////////////////////////////////////
 
-
+		void printTop();
+		void printLeft(int row);
+		void printRight(int row);
+		void printBottom();
+		bool checkMagicValue();
+		bool readline();
+		bool sizeSetSuccessfully();
+		bool mapSetSuccessfully();
 
 	};
 
