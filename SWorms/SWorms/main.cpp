@@ -38,7 +38,6 @@ int main(int argc, char* argv[])
 	if (game.loadConfig(std::string(argv[1])))
 		return Sep::RETURN_ERROR_BAD_CONFIG;
 
-	std::cout << "\nokay und jetz?\n";
 	game.printMap();
 	if (game.addWorm(2, 23))
 		return Sep::RETURN_ERROR_INVALID_TARGET;

@@ -1,3 +1,12 @@
+//------------------------------------------------------------------------------
+// Field.h
+//
+// Group: Group 10, study assistant <Thomas Brunner>
+//
+// Authors: <Robert Ertl> <01114419>
+//------------------------------------------------------------------------------
+//
+
 #pragma once
 
 namespace Sep
@@ -12,18 +21,15 @@ namespace Sep
 		//------------------------------------------------------------------------
 		// Enumeration of all supported field types
 		//
-		enum FieldType {AIR, EARTH, WATER, WORM};
+		enum FieldType { AIR, EARTH, WATER, WORM };
 
 	private:
-
 		//------------------------------------------------------------------------
 		// variable to store Field Type
 		//
 		FieldType type_;
 
-
 	public:
-
 		//------------------------------------------------------------------------
 		// Standard Constructor
 		//
@@ -38,7 +44,6 @@ namespace Sep
 		//
 		FieldType getType();
 		static char getCharacter(Field::FieldType type);
-
 		//------------------------------------------------------------------------
 		// Setter Methods
 		//

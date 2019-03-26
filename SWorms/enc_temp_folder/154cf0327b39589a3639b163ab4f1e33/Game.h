@@ -56,7 +56,7 @@ namespace Sep {
 		~Game();
 		//--------------------------------------------------------------------------
 		// Constants to minimise Typos
-		// Partly reused from Code SEP 2018
+		// Partly reused from Code
 		// Group: Group 18622, study assistant Roman Walch
 		//
 		// Authors: Christina Dionysio (01610877)
@@ -70,6 +70,8 @@ namespace Sep {
 		const static std::string Game::ALLOWED_FIELDS;
 		const static std::string Game::MAGIC_VALUE;
 		const static std::string Game::COMMENT_IDENTIFIER;
+
+
 		const static int Game::HEIGHT_MIN;
 		const static int Game::HEIGHT_MAX;
 		const static int Game::WIDTH_MIN;
@@ -149,31 +151,14 @@ namespace Sep {
 		bool mapSetSuccessfully();
 		//--------------------------------------------------------------------------
 		// Method to deal with max move steps
-		// param steps, maximal steps to move
+		//
 		int maxSteps(int steps);
 		//--------------------------------------------------------------------------
-		// Method to check for falls
-		// @param row contains y coordinates
-		// @param col contains x coordinates
-		// @param invert, value to determine if left or right moves
+		// Method to set the map size
+		//
 		void checkForPitfalls(int row, int col, bool invert);
-		//--------------------------------------------------------------------------
-		// Method to move Worm to right side
-		// @param row contains y coordinates
-		// @param col contains x coordinates
-		// @param steps contains how muchs teps to take
 		void moveRight(int row, int col, int steps);
-		//--------------------------------------------------------------------------
-		// Method to move Worm to left side
-		// @param row contains y coordinates
-		// @param col contains x coordinates
-		// @param steps contains how muchs teps to take
 		void moveLeft(int row, int col, int steps);
-		//--------------------------------------------------------------------------
-		// Method to check if climbing is available
-		// @param row contains y coordinates
-		// @param col contains x coordinates
-		// @param invert, value to determine if left or right moves
 		bool checkForClimb(int col, int row, bool invert);
 	};
 }

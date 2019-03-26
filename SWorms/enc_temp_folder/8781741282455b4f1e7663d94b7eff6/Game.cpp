@@ -1,25 +1,11 @@
-//------------------------------------------------------------------------------
-// Game.cpp
-//
-// Group: Group 10, study assistant <Thomas Brunner>
-//
-// Authors: <Robert Ertl> <01114419>
-//------------------------------------------------------------------------------
-//
-
 #include "stdafx.h"
 #include "Game.h"
 
+
+
+
 using Sep::Game;
-//--------------------------------------------------------------------------
-// Constants to minimise Typos
-// Partly reused from Code
-// Group: Group 18622, study assistant Roman Walch
-//
-// Authors: Christina Dionysio (01610877)
-// Johannes Mayerhofer (11739820)
-// Robert Ertl (01114419)
-//
+
 const std::regex Game::REGEX_SPACE(" +");
 const std::regex Game::REGEX_LEADING_WHITESPACE("^ +");
 const std::string Game::FIRST_WORD_SIZE = "SIZE:";
@@ -43,6 +29,7 @@ Game::~Game()
 {
 }
 
+//----------------------------------
 int Game::getWidth()
 {
 	return board_width_;
@@ -63,6 +50,7 @@ void Game::setHeight(const int height)
 	board_height_ = height;
 }
 
+//---------------------------------------------
 int Game::loadConfig(std::string cfg_file)
 {
 	infile_.open(cfg_file);
@@ -74,9 +62,10 @@ int Game::loadConfig(std::string cfg_file)
 	checkMagicValue();
 	return 0;
 }
-
+ //zum vergleichen testzwecke
 void Game::printHelperMap() 
 {
+
 	for (auto row = 0; row < getHeight(); row++)
 	{
 		for (auto column = 0; column < getWidth(); column++)
@@ -151,6 +140,7 @@ void Game::move(int row, int col, int steps)
 
 void Game::printTop() 
 {
+	//rand oben
 	std::cout << "Current Map:\n";
 	std::cout << "  ";
 	for (auto column = 0; column < getWidth(); column++)
@@ -204,14 +194,6 @@ void Game::printBottom()
 	std::cout << std::endl;
 }
 
-//--------------------------------------------------------------------------
-// Partly reused from Code SEP 2018
-// Group: Group 18622, study assistant Roman Walch
-//
-// Authors: Christina Dionysio (01610877)
-// Johannes Mayerhofer (11739820)
-// Robert Ertl (01114419)
-//
 bool Game::checkMagicValue()
 {
 	std::string magic_value = Game::MAGIC_VALUE;
@@ -224,15 +206,6 @@ bool Game::checkMagicValue()
 	return true;
 }
 
-//--------------------------------------------------------------------------
-// Constants to minimise Typos
-// Partly reused from Code SEP 2018
-// Group: Group 18622, study assistant Roman Walch
-//
-// Authors: Christina Dionysio (01610877)
-// Johannes Mayerhofer (11739820)
-// Robert Ertl (01114419)
-//
 bool Game::readline()
 {
 	bool valid_config_file = true;
@@ -286,15 +259,6 @@ bool Game::readline()
 	return mapSetSuccessfully();
 }
 
-//--------------------------------------------------------------------------
-// Constants to minimise Typos
-// Partly reused from Code SEP 2018
-// Group: Group 18622, study assistant Roman Walch
-//
-// Authors: Christina Dionysio (01610877)
-// Johannes Mayerhofer (11739820)
-// Robert Ertl (01114419)
-//
 bool Game::sizeSetSuccessfully()
 {
 	std::istringstream iss(line_);
@@ -317,15 +281,6 @@ bool Game::sizeSetSuccessfully()
 	return true;
 }
 
-//--------------------------------------------------------------------------
-// Constants to minimise Typos
-// Partly reused from Code SEP 2018
-// Group: Group 18622, study assistant Roman Walch
-//
-// Authors: Christina Dionysio (01610877)
-// Johannes Mayerhofer (11739820)
-// Robert Ertl (01114419)
-//
 bool Game::mapSetSuccessfully()
 {
 	for (int row = 0; row < getHeight(); row++)
