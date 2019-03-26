@@ -58,25 +58,10 @@ int Game::loadConfig(std::string cfg_file)
 	infile_.open(cfg_file);
 	if (!infile_)
 	{
-		return false;
+		return -1;
 	}
 	checkMagicValue();
-
-//todo 
-
-	//rückgabe werte 0 / -1 fehler
-	//error invalid config file
-
-
-	//Game::printHelperMap();
-	
-	//testzwecke
-	Game::printMap();
-	Game::addWorm(7, 9);
-	Game::addWorm(3, 3);
-	Game::addWorm(1, 1);
-	Game::printMap();
-	return true;
+	return 0;
 }
  //zum vergleichen testzwecke
 void Game::printHelperMap() 
@@ -138,19 +123,15 @@ int Game::addWorm(int row, int col)
 
 void Game::move(int row, int col, int steps)
 {
-	if (steps > 3)
+	steps = maxSteps(steps);
+	if (steps < 0)
 	{
-		steps = 3;
+		moveLeft(row, col, -steps);
 	}
-	if (steps < -3)
+	else if (steps > 0)
 	{
-		steps = -3;
+		moveRight(row, col, steps);
 	}
-
-
-
-
-	
 }
 
 void Game::printTop() 
@@ -233,7 +214,7 @@ bool Game::readline()
 	{
 		if (!valid_config_file)
 		{
-			std::cout << "validconfigfile false\n";
+			//std::cout << "validconfigfile false\n";
 			return false;
 		}
 		//skip comments
@@ -243,8 +224,6 @@ bool Game::readline()
 		}
 		else
 		{
-			//replace whitspaces
-			std::cout << "whitespaces\n";
 			line_ = std::regex_replace(line_, REGEX_SPACE, " ");
 			line_ = std::regex_replace(line_, REGEX_LEADING_WHITESPACE, "");
 			std::string first_word = line_.substr(0, line_.find(' '));
@@ -293,16 +272,10 @@ bool Game::sizeSetSuccessfully()
 		return false;
 	}
 
-	try
-	{
 		setWidth(std::stoi(tokens.at(1)));
 		setHeight(std::stoi(tokens.at(2)));
 		std::cout << "sizeset\n";
-	}
-	catch (std::exception &e)
-	{
-		return false;
-	}
+
 
 	if (getHeight() <= HEIGHT_MIN
 		|| getHeight() >= HEIGHT_MAX
@@ -337,4 +310,92 @@ bool Game::mapSetSuccessfully()
 		Game::map_.push_back(vector_column);
 	}
 	return true;
+}
+
+int Game::maxSteps(int steps)
+{
+	if (steps >= 3)
+	{
+		return 3;
+	}
+	else if (steps <= -3)
+	{
+		return -3;
+	}
+	else
+		return steps;
+}
+
+bool Game::checkForPitfalls(int row, int col)
+{
+	bool done = false;
+	char charValueY = Field::getCharacter(map_.at(row).at(col));
+	while (!done)
+	{
+		if (charValueY == 'o')
+		{
+			row++;
+			charValueY = Field::getCharacter(map_.at(row).at(col));
+		}
+		else if (charValueY == 'E' || charValueY == '~')
+		{
+			map_.at(row - 1).at(col) = Field::FieldType::WORM;
+			done = true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void Game::moveRight(int row, int col, int steps)
+{
+	char charValueX = 0;
+	char charValueY = 0;
+	for (int icol = 1; icol <= steps; icol++)
+	{
+		charValueX = Field::getCharacter(map_.at(row).at(col + icol));
+		charValueY = Field::getCharacter(map_.at(row - 1).at(col + icol));
+		if (charValueX == 'o' && (charValueY == 'E' || charValueY == '~'))
+		{
+			map_.at(row).at(col + icol) = Field::FieldType::WORM;
+			map_.at(row).at(col + icol - 1) = Field::FieldType::AIR;
+		}
+		else if (charValueX == 'o' && (charValueY == 'W'))
+		{
+			map_.at(row).at(col + icol - 1) = Field::FieldType::AIR;
+		}
+		else if (checkForPitfalls(row - 1, col) == true)
+		{
+			row++;
+			map_.at(row).at(col) = Field::FieldType::AIR;
+		}
+	}
+}
+
+void Game::moveLeft(int row, int col, int steps)
+{
+	char charValueX = 0;
+	char charValueY = 0;
+	for (int icol = 1; icol <= steps; icol++)
+	{
+		charValueX = Field::getCharacter(map_.at(row).at(col - icol));
+		charValueY = Field::getCharacter(map_.at(row - 1).at(col - icol));
+		if (charValueX == 'o' && (charValueY == 'E' || charValueY == '~'))
+		{
+			map_.at(row).at(col - icol) = Field::FieldType::WORM;
+			map_.at(row).at(col - icol + 1) = Field::FieldType::AIR;
+		}
+		else if (charValueX == 'o' && (charValueY == 'W'))
+		{
+			map_.at(row).at(col - icol + 1) = Field::FieldType::AIR;
+		}
+		else if (checkForPitfalls(row - 1, col) == true)
+		{
+			row++;
+			map_.at(row).at(col) = Field::FieldType::AIR;
+		}
+	}
 }

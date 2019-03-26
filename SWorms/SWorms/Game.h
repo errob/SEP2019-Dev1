@@ -128,6 +128,10 @@ namespace Sep {
 		bool readline();
 		bool sizeSetSuccessfully();
 		bool mapSetSuccessfully();
+		int maxSteps(int steps);
+		bool checkForPitfalls(int row, int col);
+		void moveRight(int row, int col, int steps);
+		void moveLeft(int row, int col, int steps);
 
 	};
 

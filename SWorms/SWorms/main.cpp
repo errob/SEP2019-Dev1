@@ -34,17 +34,17 @@ int main(int argc, char* argv[])
 	}
 	
 	Sep::Game game;
-	game.loadConfig(std::string(argv[1]));
 
-//	if (game.loadConfig(std::string(argv[1])))
-	//	return Sep::RETURN_ERROR_BAD_CONFIG;
-	/*
+	if (game.loadConfig(std::string(argv[1])))
+		return Sep::RETURN_ERROR_BAD_CONFIG;
+
+	std::cout << "\nokay und jetz?\n";
 	game.printMap();
 	if (game.addWorm(2, 23))
 		return Sep::RETURN_ERROR_INVALID_TARGET;
 
 	game.printMap();
-	game.move(7, 23, 2);
+	/*game.move(7, 23, 2);
 	if (game.addWorm(1, 24))
 		return Sep::RETURN_ERROR_INVALID_TARGET;
 
@@ -56,13 +56,14 @@ int main(int argc, char* argv[])
 	game.move(9, 25, 1); // will fall in water
 	game.move(4, 13, -1); //climb
 	game.printMap();
+*/
 	if (game.addWorm(10, 16)) //error
 		return Sep::RETURN_ERROR_INVALID_TARGET;
 
 	if (game.addWorm(0, 1))
 		return Sep::RETURN_ERROR_INVALID_TARGET;
 
-	game.move(8, 1, 3);
+	/*game.move(8, 1, 3);
 	*/
 	return Sep::RETURN_OK;
 }
