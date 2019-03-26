@@ -129,9 +129,10 @@ namespace Sep {
 		bool sizeSetSuccessfully();
 		bool mapSetSuccessfully();
 		int maxSteps(int steps);
-		bool checkForPitfalls(int row, int col);
+		void checkForPitfalls(int row, int col, bool invert);
 		void moveRight(int row, int col, int steps);
 		void moveLeft(int row, int col, int steps);
+		bool checkForClimb(int col, int row, bool invert);
 
 	};
 

@@ -97,13 +97,13 @@ int Game::addWorm(int row, int col)
 {
 	char charValue = Field::getCharacter(map_.at(row).at(col));
 	bool done = false;
-	if (charValue != 'o')
+	if (charValue != ' ')
 	{
 		return -2;
 	}
 	while(!done)
 	{
-		if (charValue == 'o')
+		if (charValue == ' ')
 		{
 		row++;
 		charValue = Field::getCharacter(map_.at(row).at(col));
@@ -326,29 +326,34 @@ int Game::maxSteps(int steps)
 		return steps;
 }
 
-bool Game::checkForPitfalls(int row, int col)
+void Game::checkForPitfalls(int col, int row, bool invert)
 {
-	bool done = false;
-	char charValueY = Field::getCharacter(map_.at(row).at(col));
-	while (!done)
+	int inverter = 1;
+	if (invert == true)
 	{
-		if (charValueY == 'o')
+		inverter = -1;
+	}
+	int counter = 1;
+	bool done = false;
+
+	char charValueX = Field::getCharacter(map_.at(row).at(col + inverter));
+	map_.at(row).at(col-1) = Field::FieldType::AIR;
+
+	while (!done)	
+	{
+		char charValueY = Field::getCharacter(map_.at(row + counter).at(col + inverter));
+		if (charValueY == 'E' || charValueY == '~') 
 		{
-			row++;
-			charValueY = Field::getCharacter(map_.at(row).at(col));
-		}
-		else if (charValueY == 'E' || charValueY == '~')
+			map_.at(row+counter-1).at(col+inverter) = Field::FieldType::WORM;
+			done = true;
+		} else if (charValueY == 'W') 
 		{
-			map_.at(row - 1).at(col) = Field::FieldType::WORM;
 			done = true;
 		}
-		else
-		{
-			return false;
-		}
+		counter++;
 	}
-	return true;
 }
+
 
 void Game::moveRight(int row, int col, int steps)
 {
@@ -357,20 +362,24 @@ void Game::moveRight(int row, int col, int steps)
 	for (int icol = 1; icol <= steps; icol++)
 	{
 		charValueX = Field::getCharacter(map_.at(row).at(col + icol));
-		charValueY = Field::getCharacter(map_.at(row - 1).at(col + icol));
-		if (charValueX == 'o' && (charValueY == 'E' || charValueY == '~'))
+		charValueY = Field::getCharacter(map_.at(row + 1).at(col + icol));
+		if (charValueX == ' ' && (charValueY == 'E' || charValueY == '~'))
 		{
 			map_.at(row).at(col + icol) = Field::FieldType::WORM;
 			map_.at(row).at(col + icol - 1) = Field::FieldType::AIR;
 		}
-		else if (charValueX == 'o' && (charValueY == 'W'))
+		else if (charValueX == ' ' && (charValueY == 'W'))
 		{
 			map_.at(row).at(col + icol - 1) = Field::FieldType::AIR;
 		}
-		else if (checkForPitfalls(row - 1, col) == true)
+		else if (checkForClimb(row, col, false) == true)
 		{
-			row++;
-			map_.at(row).at(col) = Field::FieldType::AIR;
+			map_.at(row-1).at(col + icol) = Field::FieldType::WORM;
+			map_.at(row).at(col + icol - 1) = Field::FieldType::AIR;
+		}
+		else if (charValueX == ' ' && (charValueY == ' '))
+		{
+			checkForPitfalls(col+icol, row, false);
 		}
 	}
 }
@@ -382,20 +391,42 @@ void Game::moveLeft(int row, int col, int steps)
 	for (int icol = 1; icol <= steps; icol++)
 	{
 		charValueX = Field::getCharacter(map_.at(row).at(col - icol));
-		charValueY = Field::getCharacter(map_.at(row - 1).at(col - icol));
-		if (charValueX == 'o' && (charValueY == 'E' || charValueY == '~'))
+		charValueY = Field::getCharacter(map_.at(row + 1).at(col - icol));
+		if (charValueX == ' ' && (charValueY == 'E' || charValueY == '~'))
 		{
 			map_.at(row).at(col - icol) = Field::FieldType::WORM;
 			map_.at(row).at(col - icol + 1) = Field::FieldType::AIR;
 		}
-		else if (charValueX == 'o' && (charValueY == 'W'))
+		else if (charValueX == ' ' && (charValueY == 'W'))
 		{
 			map_.at(row).at(col - icol + 1) = Field::FieldType::AIR;
 		}
-		else if (checkForPitfalls(row - 1, col) == true)
+		else if (checkForClimb(row, col, true) == true)
 		{
-			row++;
-			map_.at(row).at(col) = Field::FieldType::AIR;
+			map_.at(row - 1).at(col - icol) = Field::FieldType::WORM;
+			map_.at(row).at(col - icol + 1) = Field::FieldType::AIR;
+		}
+		else if (charValueX == ' ' && (charValueY == ' '))
+		{
+			checkForPitfalls(col - icol, row, true);
 		}
 	}
+}
+
+bool Game::checkForClimb(int row, int col, bool invert)
+{
+	int inverter = 1;
+	if (invert == true)
+	{
+		inverter = -1;
+	}
+	char charValueX = Field::getCharacter(map_.at(row).at(col+inverter));
+	char charValueY = Field::getCharacter(map_.at(row-1).at(col+inverter));
+	if (charValueY == ' ' && (charValueX == 'E' || charValueX == '~'))
+	{
+		return true;
+	} else 
+	{
+		return false;
+	}	
 }

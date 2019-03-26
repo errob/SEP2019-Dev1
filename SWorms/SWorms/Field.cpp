@@ -26,7 +26,7 @@ char Field::getCharacter(Field::FieldType type)
 	switch (type)
 	{
 	case AIR:
-		return 'o';
+		return ' ';
 	case EARTH:
 		return 'E';
 	case WATER:
