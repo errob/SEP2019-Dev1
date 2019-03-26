@@ -7,7 +7,6 @@
 //------------------------------------------------------------------------------
 //
 
-#include "stdafx.h"
 #include "Game.h"
 
 using Sep::Game;
@@ -374,8 +373,6 @@ void Game::checkForPitfalls(int col, int row, bool invert)
 	{
 		inverter = -1;
 	}
-
-	char charValueX = Field::getCharacter(map_.at(row).at(col + inverter));
 	map_.at(row).at(col-1) = Field::FieldType::AIR;
 
 	while (!done)	

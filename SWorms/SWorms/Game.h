@@ -12,9 +12,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "Field.h"
 #include <regex>
 #include <sstream>
+#include "Field.h"
 
 namespace Sep {
 	//----------------------------------------------------------------------------
@@ -65,15 +65,15 @@ namespace Sep {
 		//
 		const static std::regex REGEX_SPACE;
 		const static std::regex REGEX_LEADING_WHITESPACE;
-		const static std::string Game::FIRST_WORD_SIZE;
-		const static std::string Game::FIRST_WORD_MAP;
-		const static std::string Game::ALLOWED_FIELDS;
-		const static std::string Game::MAGIC_VALUE;
-		const static std::string Game::COMMENT_IDENTIFIER;
-		const static int Game::HEIGHT_MIN;
-		const static int Game::HEIGHT_MAX;
-		const static int Game::WIDTH_MIN;
-		const static int Game::WIDTH_MAX;
+		const static std::string FIRST_WORD_SIZE;
+		const static std::string FIRST_WORD_MAP;
+		const static std::string ALLOWED_FIELDS;
+		const static std::string MAGIC_VALUE;
+		const static std::string COMMENT_IDENTIFIER;
+		const static int HEIGHT_MIN;
+		const static int HEIGHT_MAX;
+		const static int WIDTH_MIN;
+		const static int WIDTH_MAX;
 		//--------------------------------------------------------------------------
 		// Getter
 		//
